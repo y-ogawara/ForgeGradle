@@ -20,16 +20,21 @@
 
 package net.minecraftforge.gradle.common.util;
 
+import com.google.common.collect.ImmutableList;
 import org.gradle.api.Project;
 
 public class MojangLicenseHelper {
-    //TODO: Add a task that people can run to quiet this warning.
-    //Also output the specific text from the targeted MC version.
+    private static final boolean DISABLE_WARNING = Boolean.getBoolean("fg.disableMojangWarning");
+    private static final ImmutableList<String> officialChannels = ImmutableList.of("official", "official_snapshot", "official_stable");
+
+    //TODO: Also output the specific text from the targeted MC version.
     public static void displayWarning(Project project, String channel) {
-        if ("official".equals(channel)) {
+        if (DISABLE_WARNING)
+            return;
+        if (officialChannels.contains(channel)) {
             String warning = "WARNING: "
                 + "This project is configured to use the official obfuscation mappings provided by Mojang. "
-                + "These mapping fall under their associated license, you should be fully aware of this license. "
+                + "These mapping fall under their associated license; you should be fully aware of this license. "
                 + "For the latest license text, refer to the mapping file itself, or the reference copy here: "
                 + "https://github.com/MinecraftForge/MCPConfig/blob/master/Mojang.md";
             project.getLogger().warn(warning);

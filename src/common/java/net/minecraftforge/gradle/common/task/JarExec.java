@@ -38,6 +38,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 
 import net.minecraftforge.gradle.common.util.MavenArtifactDownloader;
@@ -112,6 +113,7 @@ public class JarExec extends DefaultTask {
     protected void postProcess(File log) {
     }
 
+    @OutputFile
     public String getResolvedVersion() {
         return MavenArtifactDownloader.getVersion(getProject(), getTool());
     }
